@@ -28,13 +28,18 @@
         Add your email below to stay up-to-date with announcements and our launch deals.</p>
 
         <form class="form" action="#">
-          <input class="form__email" placeholder="Email Address" type="text" name="email" id="email">
-          <button class="form__button"><img class="arrow" src="images/icon-arrow.svg" alt=""></button>
+          
+          <input class="form__email" required placeholder="Email Address" type="email" name="email" id="email"
+          pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$">
+          <span class="error__icon"><img class="error__img" src="images/icon-error.svg" alt="error"> </span>
+            
+          <button class="form__button"><img class="arrow" src="images/icon-arrow.svg" alt="arrow"></button>
+          
         </form>
     </div>
 
     <div class="backgraound">
-      
+
     </div>
 
   
@@ -44,5 +49,59 @@
       Coded by <a href="#">Your Name Here</a>.
     </p>
   </footer> -->
+
+  <script>
+    const d= document,
+    $form=d.querySelector(".form");
+    $formlabel=d.querySelector(".form");
+    
+    const $label= d.createElement("label");
+          $label.id="label";
+          $label.textContent=`error, please provide a valid email`;
+          $label.classList.add("error");
+        $formlabel.insertAdjacentElement("afterbegin",$label);
+
+    d.addEventListener("keyup",e=>{
+
+      if(e.target.matches(".form__email")){
+        // console.log(e.target.value,`si iso matches`)
+
+        let $input=e.target,
+                pattern=$input.pattern || $input.dataset.pattern;
+                // console.log($input,pattern)
+
+                function active(){
+                  d.getElementById("label").style.display="block"
+                  d.querySelector(".error__icon").style.display="block"
+                }
+                function noactive(){
+                  d.getElementById("label").style.display="none";
+                  d.querySelector(".error__icon").style.display="none"
+                } 
+
+            if (pattern && $input.value!=="") {
+              //  console.log("el input tiene patron");
+              //  console.log($input.value);
+              //  console.log($input.name);
+
+                let regex = new RegExp(pattern);
+                return !regex.exec($input.value)
+                ? active()
+                :noactive();
+    
+            }
+            // if(!pattern){
+            //     console.log("no tiene patron")
+            //     return $input.value===""
+            //     ?d.getElementById("label").style.display="block"
+            //     :d.getElementById("label").style.display="none";
+            // }
+
+      }
+
+    })
+
+
+  </script>
 </body>
 </html>
